@@ -11,4 +11,4 @@ export const fetchTodos = createAsyncThunk(
             return thunkAPI.rejectWithValue('Failed to fetch todos')
         }
     }
-);
+)
