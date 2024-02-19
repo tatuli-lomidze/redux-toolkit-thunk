@@ -1,35 +1,23 @@
-import { useDispatch } from 'react-redux'
-import { addTodo } from '../store/todoSlice'
-import { useState } from 'react'
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { getTodo } from "../store/todoThunks"
 
 const TaskForm = () => {
-  const [taskName, setTaskName] = useState('')
-  const dispatch = useDispatch()
+    const dispatch = useDispatch()
+    const {todo, loading, error} = useSelector(state => state.todo)
+    useEffect(() => {
+        dispatch(getTodo())
+    }, [dispatch])
+    
 
-  const handleInputChange = (e) => {
-    setTaskName(e.target.value)
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (taskName.trim() !== '') {
-      dispatch(addTodo({ name: taskName }))
-      setTaskName('')
-    }
-  }
-
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Enter task name"
-        value={taskName}
-        onChange={handleInputChange}
-      />
-      <button type="submit">Add Task</button>
-    </form>
-  )
+    if(loading) return <div>Loading .. </div>
+    if(error) return <div>{error}</div>
+ 
+    return <div className="tasks">
+            <h1>tasks</h1>
+        {todo.map(task => <div style={{border: '1px solid black'}} key={task._uuid}> 
+            <h3>{task._uuid}</h3>
+         </div>)}
+    </div>
 }
-
 export default TaskForm

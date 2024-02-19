@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import todoReducer from './todoSlice'
 import darkModeReducer from './darkModeSlice'
+import todoReducer from './todoSlice'
 
 const store = configureStore({
   reducer: {
-    todos: todoReducer,
     darkMode: darkModeReducer,
+    todo: todoReducer,
   },
 })
 
